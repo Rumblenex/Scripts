@@ -881,8 +881,8 @@ function sex()
             updatejson()
             
             if (traveling_merchant.is_open.value and getgenv().buyStarRemnant) then
+                print("star remnant statemnt works")
                 local items = traveling_merchant.stand.items:GetChildren()
-                buyItemWebhook("worked")
                 for i,v in pairs(items) do
                     local currItem = items[i]
                 
