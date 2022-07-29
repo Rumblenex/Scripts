@@ -6,9 +6,8 @@ if game.PlaceId == 8304191830 then
     
     repeat task.wait() until game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name)
     repeat task.wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("collection"):FindFirstChild("grid"):FindFirstChild("List"):FindFirstChild("Outer"):FindFirstChild("UnitFrames")
-    
-    if game.PlaceId == 8304191830 then
-        local traveling_merchant = game.workspace:FindFirstChild("travelling_merchant")
+
+    local traveling_merchant = game.workspace:FindFirstChild("travelling_merchant")
             if (traveling_merchant.is_open.value and getgenv().buyStarRemnant) then
                 print("star remnant statemnt works")
                 local items = traveling_merchant.stand.items:GetChildren()
@@ -49,7 +48,7 @@ if game.PlaceId == 8304191830 then
                     end
                 end
             end
-    end
+            
 else
     repeat task.wait() until game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name)
     game:GetService("ReplicatedStorage").endpoints.client_to_server.vote_start:InvokeServer()
