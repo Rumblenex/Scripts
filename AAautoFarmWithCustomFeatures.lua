@@ -1520,7 +1520,7 @@ coroutine.resume(coroutine.create(function()
                 }
 
                 game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
-                task.wait()
+                task.wait(2)
             end
         end
     end
