@@ -1481,7 +1481,7 @@ coroutine.resume(coroutine.create(function()
                         game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
                         
                         local item = tostring(summonTicket)
-                        buyItemWebhook(summonTicket)
+                        buyItemWebhook(item)
                     end
                 end
             end
@@ -1520,7 +1520,7 @@ coroutine.resume(coroutine.create(function()
                 }
 
                 game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
-                task.wait(2)
+                task.wait()
             end
         end
     end
