@@ -1,4 +1,4 @@
---v1.4.1 
+--v1.4.1
 ---// Loading Section \\---
 task.wait(2)
 repeat  task.wait() until game:IsLoaded()
@@ -823,13 +823,6 @@ function sex()
         customFeatures:Toggle("Auto Farm Daily Infinite", getgenv().farmDailies, function(bool)
             getgenv().farmDailies = bool
             updatejson()
-
-            if(getgenv().farmDailies == false) then
-                getgenv().world = "Marine's Ford"
-                getgenv().level = "marineford_infinite"
-                getgenv().difficulty = "Hard"
-                getgenv().SpawnUnitPos = getgenv().marinefordSpawnPos
-            end
 
             while(getgenv().farmDailies) do
                 task.wait()
