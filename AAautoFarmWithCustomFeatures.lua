@@ -875,13 +875,14 @@ function sex()
             updatejson()
         end)
 
+        local traveling_merchant = game.workspace:FindFirstChild("travelling_merchant")
         customFeatures:Toggle("Auto Buy Star Remnant", getgenv().buyStarRemnant, function(bool)
             getgenv().buyStarRemnant = bool
             updatejson()
-
-            if (traveling_merchant.is_open.value) then
-                local items = traveling_merchant.stand.items:GetChildren()
             
+            if (traveling_merchant.is_open.value and getgenv().buyStarRemnant) then
+                local items = traveling_merchant.stand.items:GetChildren()
+                buyItemWebhook("worked")
                 for i,v in pairs(items) do
                     local currItem = items[i]
                 
@@ -905,7 +906,7 @@ function sex()
             getgenv().buySummonTicket = bool
             updatejson()
 
-            if (traveling_merchant.is_open.value) then
+            if (traveling_merchant.is_open.value and getgenv().buySummonTicket) then
                 local items = traveling_merchant.stand.items:GetChildren()
             
                 for i,v in pairs(items) do
@@ -952,6 +953,8 @@ else
         -- unitname = "name",
         -- unitid = "id",
         autoabilities = false,
+        buyStarRemnant = false,
+        buySummonTicket = false,
         webhook = "",
         sellatwave = 0,
         autosell = false,
