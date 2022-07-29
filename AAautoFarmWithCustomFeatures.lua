@@ -1407,7 +1407,7 @@ coroutine.resume(coroutine.create(function()
     while task.wait() do
         if getgenv().autostart and getgenv().AutoFarm then
             if game.PlaceId == 8304191830 then
-
+                if(getgenv().farmDailies) then
                     task.wait()
                     if(getgenv().namekDailyInfinite == false) then
                         getgenv().world = "Planet Namak"
@@ -1441,6 +1441,7 @@ coroutine.resume(coroutine.create(function()
     
                     end
                     updatejson()
+                end
 
                     if(getgenv().world == "Planet Namak") then
                         getgenv().SpawnUnitPos = getgenv().namekSpawnPos
