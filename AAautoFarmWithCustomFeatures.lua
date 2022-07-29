@@ -1496,8 +1496,8 @@ coroutine.resume(coroutine.create(function()
                 local args = {
                     [1] = getgenv().door
                 }
-                --game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(
-                    --args))
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(
+                    args))
 
                     task.wait(0.1)
 
@@ -1507,8 +1507,8 @@ coroutine.resume(coroutine.create(function()
                     [3] = true, -- Friends Only or not
                     [4] = getgenv().difficulty
                 }
-               -- game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(
-                   -- args))
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(
+                    args))
 
                     task.wait(0.1)
 
@@ -1516,7 +1516,7 @@ coroutine.resume(coroutine.create(function()
                     [1] = getgenv().door
                 }
 
-                --game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
                 task.wait()
             end
         end
