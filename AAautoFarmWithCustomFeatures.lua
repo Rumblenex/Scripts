@@ -539,6 +539,10 @@ function sex()
             getgenv().weburl = web_url
             updatejson()
         end)
+        webhooktab:Button("Test Webhook", function()
+            webhook()
+            buyItemWebhook("test")
+        end)
 
         autofarmtab:Label(" ")
         autofarmtab:Label(" ")
