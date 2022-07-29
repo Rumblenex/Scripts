@@ -1441,50 +1441,67 @@ coroutine.resume(coroutine.create(function()
     
                     end
                     updatejson()
-                
+
+                    if(getgenv().world == "Planet Namak") then
+                        getgenv().SpawnUnitPos = getgenv().namekSpawnPos
+        
+                    elseif (getgenv().world == "Shiganshinu District") then
+                        getgenv().SpawnUnitPos = getgenv().aotSpawnPos
+        
+                    elseif (getgenv().world == "Snowy Town") then
+                        getgenv().SpawnUnitPos = getgenv().demonslayerSpawnPos
+                        
+                    elseif (getgenv().world == "Hidden Sand Village") then
+                        getgenv().SpawnUnitPos = getgenv().narutoSpawnPos
+        
+                    elseif (getgenv().world == "Marine's Ford") then
+                        getgenv().SpawnUnitPos = getgenv().marinefordSpawnPos
+        
+                    end
+                    updatejson()
 
 
                 local traveling_merchant = game.workspace:FindFirstChild("travelling_merchant")
-        if (traveling_merchant.is_open.value and getgenv().buyStarRemnant) then
-            print("star remnant statemnt works")
-            local items = traveling_merchant.stand.items:GetChildren()
-            for i,v in pairs(items) do
-                    local currItem = items[i]
-                
-                    if(currItem:FindFirstChild("star_remnant")) then
-                        print("in here")
-                        local starRemnant = currItem
-                        local args = {
-                            [1] = tostring(starRemnant)
-                        }
-
-                        game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
-
-                        local item = tostring(starRemnant)
-                        buyItemWebhook(item)
-                    end
-                end
-            end
-
-            if (traveling_merchant.is_open.value and getgenv().buySummonTicket) then
-                local items = traveling_merchant.stand.items:GetChildren()
-            
-                for i,v in pairs(items) do
-                    local currItem = items[i]
-                
-                    if(currItem:FindFirstChild("star_neon")) then
-                        local summonTicket = currItem
-                        local args = {
-                            [1] = tostring(summonTicket)
-                        }
-        
-                        game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
+                if (traveling_merchant.is_open.value and getgenv().buyStarRemnant) then
+                    print("star remnant statemnt works")
+                    local items = traveling_merchant.stand.items:GetChildren()
+                    for i,v in pairs(items) do
+                            local currItem = items[i]
                         
-                        local item = tostring(summonTicket)
-                        buyItemWebhook(item)
+                            if(currItem:FindFirstChild("star_remnant")) then
+                                print("in here")
+                                local starRemnant = currItem
+                                local args = {
+                                    [1] = tostring(starRemnant)
+                                }
+
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
+
+                                local item = tostring(starRemnant)
+                                buyItemWebhook(item)
+                            end
+                        end
                     end
-                end
-            end
+
+                    if (traveling_merchant.is_open.value and getgenv().buySummonTicket) then
+                        local items = traveling_merchant.stand.items:GetChildren()
+                    
+                        for i,v in pairs(items) do
+                            local currItem = items[i]
+                        
+                            if(currItem:FindFirstChild("star_neon")) then
+                                local summonTicket = currItem
+                                local args = {
+                                    [1] = tostring(summonTicket)
+                                }
+                
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
+                                
+                                local item = tostring(summonTicket)
+                                buyItemWebhook(item)
+                            end
+                        end
+                    end
 
 
                 for i, v in pairs(game:GetService("Workspace")["_LOBBIES"].Story:GetDescendants()) do
