@@ -887,6 +887,7 @@ function sex()
                     local currItem = items[i]
                 
                     if(currItem:FindFirstChild("star_remnant")) then
+                        print("in here")
                         local starRemnant = currItem
                         local args = {
                             [1] = tostring(starRemnant)
