@@ -472,10 +472,10 @@ function sex()
 
         
  
-        local worlddrop = autofarmtab:Dropdown("Select World", {"Plannet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford"}, getgenv().world, function(world)
+        local worlddrop = autofarmtab:Dropdown("Select World", {"Planet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford"}, getgenv().world, function(world)
                 getgenv().world = world
                 updatejson()
-                if world == "Plannet Namak" then
+                if world == "Planet Namak" then
                     getgenv().leveldrop:Clear()
                     table.clear(levels)
                     getgenv().levels = {"namek_infinite", "namek_level_1", "namek_level_2", "namek_level_3",
