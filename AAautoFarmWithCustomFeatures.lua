@@ -878,17 +878,17 @@ function sex()
                     getgenv().difficulty = "Hard"
                     getgenv().SpawnUnitPos = getgenv().narutoSpawnPos
 
-                elseif (getgenv().tokyoGhoulDailyInfinite == false) then
-                    getgenv().world = "Ghoul City"
-                    getgenv().level = "tokyoghoul_infinite"
-                    getgenv().difficulty = "Hard"
-                    getgenv().SpawnUnitPos = getgenv().tokyoGhoulSpawnPos
-
-                else
+                elseif (getgenv().marinefordDailyInfinite == false) then
                     getgenv().world = "Marine's Ford"
                     getgenv().level = "marineford_infinite"
                     getgenv().difficulty = "Hard"
                     getgenv().SpawnUnitPos = getgenv().marinefordSpawnPos
+
+                else 
+                    getgenv().world = "Ghoul City"
+                    getgenv().level = "tokyoghoul_infinite"
+                    getgenv().difficulty = "Hard"
+                    getgenv().SpawnUnitPos = getgenv().tokyoGhoulSpawnPos
 
                 end
             end
