@@ -211,12 +211,14 @@ function sex()
     getgenv().demonslayerDailyInfinite = data.demonslayerDailyInfinite
     getgenv().narutoDailyInfinite = data.narutoDailyInfinite
     getgenv().marinefordDailyInfinite = data.marinefordDailyInfinite
+    getgenv().tokyoGhoulDailyInfinite = data.tokyoGhoulDailyInfinite
 
     getgenv().namekSpawnPos = data.xnamekSpawnPos
     getgenv().aotSpawnPos = data.xaotSpawnPos
     getgenv().demonslayerSpawnPos = data.xdemonslayerSpawnPos
     getgenv().narutoSpawnPos = data.xnarutoSpawnPos
     getgenv().marinefordSpawnPos = data.xmarinefordSpawnPos
+    getgenv().tokyoGhoulSpawnPos = data.xtokyoGhoulSpawnPos
 
     getgenv().buyStarRemnant = data.buyStarRemnant
     getgenv().buySummonTicket = data.buySummonTicket
@@ -251,12 +253,14 @@ function sex()
             demonslayerDailyInfinite = getgenv().demonslayerDailyInfinite,
             narutoDailyInfinite = getgenv().narutoDailyInfinite,
             marinefordDailyInfinite = getgenv().marinefordDailyInfinite,
+            tokyoGhoulDailyInfinite = getgenv().tokyoGhoulDailyInfinite,
             
             xnamekSpawnPos = getgenv().namekSpawnPos,
             xaotSpawnPos = getgenv().aotSpawnPos,
             xdemonslayerSpawnPos = getgenv().demonslayerSpawnPos,
             xnarutoSpawnPos =  getgenv().narutoSpawnPos,
             xmarinefordSpawnPos =  getgenv().marinefordSpawnPos,
+            xtokyoGhoulSpawnPos = getgenv().tokyoGhoulSpawnPos,
 
             buyStarRemnant = getgenv().buyStarRemnant,
             buySummonTicket = getgenv().buySummonTicket
@@ -472,7 +476,7 @@ function sex()
 
         
  
-        local worlddrop = autofarmtab:Dropdown("Select World", {"Planet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford"}, getgenv().world, function(world)
+        local worlddrop = autofarmtab:Dropdown("Select World", {"Planet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford", "Ghoul City"}, getgenv().world, function(world)
                 getgenv().world = world
                 updatejson()
                 if world == "Planet Namak" then
@@ -513,6 +517,15 @@ function sex()
                     table.clear(levels)
                     getgenv().levels = {"marineford_infinite","marineford_level_1","marineford_level_2","marineford_level_3",
                     "marineford_level_4","marineford_level_5","marineford_level_6",}
+                    for i, v in ipairs(levels) do
+                        getgenv().leveldrop:Add(v)
+                    end
+
+                elseif world == "Ghoul City" then
+                    getgenv().leveldrop:Clear()
+                    table.clear(levels)
+                    getgenv().levels = {"tokyoghoul_infinite","tokyoghoul_level_1","tokyoghoul_level_2","tokyoghoul_level_3",
+                    "tokyoghoul_level_4","tokyoghoul_level_5","tokyoghoul_level_6",}
                     for i, v in ipairs(levels) do
                         getgenv().leveldrop:Add(v)
                     end
@@ -647,6 +660,12 @@ function sex()
                             marinefordSpawnPos[UnitPos]["z"] = a.Position.Z
                             getgenv().SpawnUnitPos = getgenv().marinefordSpawnPos
 
+                        elseif (getgenv().world == "Ghoul City") then
+                            tokyoGhoulSpawnPos[UnitPos]["x"] = a.Position.X
+                            tokyoGhoulSpawnPos[UnitPos]["y"] = a.Position.Y
+                            tokyoGhoulSpawnPos[UnitPos]["z"] = a.Position.Z
+                            getgenv().SpawnUnitPos = getgenv().tokyoGhoulSpawnPos
+
                         end
 
 
@@ -731,6 +750,12 @@ function sex()
         autofarmtab:Label("Difficulty: " .. tostring(getgenv().difficulty))
         autofarmtab:Label("Selected World: " .. tostring(getgenv().world))
         autofarmtab:Label("Selected Level: " .. tostring(getgenv().level))
+        autofarmtab:Label("Namek Infinite: " .. tostring(getgenv().namekDailyInfinite))
+        autofarmtab:Label("Aot Infinite: " .. tostring(getgenv().aotDailyInfinite))
+        autofarmtab:Label("Demon Slayer Infinite: " .. tostring(getgenv().demonslayerDailyInfinite))
+        autofarmtab:Label("Naruto Infinite: " .. tostring(getgenv().narutoDailyInfinite))
+        autofarmtab:Label("Marine Ford Infinite: " .. tostring(getgenv().marinefordDailyInfinite))
+        autofarmtab:Label("Tokyo Ghoul: " .. tostring(getgenv().tokyoGhoulDailyInfinite))
         autofarmtab:Label(" ")
         autofarmtab:Label(" ")
 
@@ -812,16 +837,16 @@ function sex()
         local customFeatures = serv:Channel("Custom Features")
         getgenv().autoopenocean = false
             
-        customFeatures:Toggle("Auto Open Ocean Stars", getgenv().autoopenocean, function(bool)
-            getgenv().autoopenocean = bool
-            while getgenv().autoopenocean do
-                task.wait()
-                local args = {[1] = "capsule_marineford"}
+        --customFeatures:Toggle("Auto Open Ocean Stars", getgenv().autoopenocean, function(bool)
+            --getgenv().autoopenocean = bool
+            --while getgenv().autoopenocean do
+                --task.wait()
+                --local args = {[1] = "capsule_marineford"}
 
-                game:GetService("ReplicatedStorage").endpoints.client_to_server.use_item:InvokeServer(unpack(args))
-            end
-            updatejson()
-        end)
+                --game:GetService("ReplicatedStorage").endpoints.client_to_server.use_item:InvokeServer(unpack(args))
+            --end
+            --updatejson()
+        --end)
 
         customFeatures:Toggle("Auto Farm Daily Infinite", getgenv().farmDailies, function(bool)
             getgenv().farmDailies = bool
@@ -853,6 +878,12 @@ function sex()
                     getgenv().difficulty = "Hard"
                     getgenv().SpawnUnitPos = getgenv().narutoSpawnPos
 
+                elseif (getgenv().tokyoGhoulDailyInfinite == false) then
+                    getgenv().world = "Ghoul City"
+                    getgenv().level = "tokyoghoul_infinite"
+                    getgenv().difficulty = "Hard"
+                    getgenv().SpawnUnitPos = getgenv().tokyoGhoulSpawnPos
+
                 else
                     getgenv().world = "Marine's Ford"
                     getgenv().level = "marineford_infinite"
@@ -864,9 +895,7 @@ function sex()
 
             
 
-            updatejson()
-
-            
+            updatejson()  
         
         end)
 
@@ -876,6 +905,7 @@ function sex()
             getgenv().demonslayerDailyInfinite = false
             getgenv().narutoDailyInfinite = false
             getgenv().marinefordDailyInfinite = false
+            getgenv().tokyoGhoulDailyInfinite = false
 
             updatejson()
         end)
@@ -934,6 +964,16 @@ function sex()
 
         end)
 
+        customFeatures:Label("--- Saved Config (Doesn't Refresh) ---")
+        customFeatures:Label("Namek Infinite: " .. tostring(getgenv().namekDailyInfinite))
+        customFeatures:Label("Aot Infinite: " .. tostring(getgenv().aotDailyInfinite))
+        customFeatures:Label("Demon Slayer Infinite: " .. tostring(getgenv().demonslayerDailyInfinite))
+        customFeatures:Label("Naruto Infinite: " .. tostring(getgenv().narutoDailyInfinite))
+        customFeatures:Label("Marine Ford Infinite: " .. tostring(getgenv().marinefordDailyInfinite))
+        customFeatures:Label("Tokyo Ghoul: " .. tostring(getgenv().tokyoGhoulDailyInfinite))
+        customFeatures:Label(" ")
+        customFeatures:Label(" ")
+
     end
 
     local credits = serv:Channel("Credits")
@@ -966,6 +1006,7 @@ else
         narutoDailyInfinite = false,
         demonslayerDailyInfinite = false,
         marinefordDailyInfinite = false,
+        tokyoGhoulDailyInfinite = false,
         webhook = "",
         sellatwave = 0,
         autosell = false,
@@ -977,6 +1018,44 @@ else
         level = "nil",
         door = "nil",
         xspawnUnitPos = {
+            UP1 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            },
+
+            UP2 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            },
+
+            UP3 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            },
+
+            UP4 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            },
+            
+            UP5 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            },
+
+            UP6 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            }
+        },
+
+        xtokyoGhoulSpawnPos = {
             UP1 = {
                 x = -2952.81689453125,
                 y = 91.80620574951172,
@@ -1434,6 +1513,12 @@ coroutine.resume(coroutine.create(function()
                         getgenv().level = "naruto_infinite"
                         getgenv().difficulty = "Hard"
                         getgenv().SpawnUnitPos = getgenv().narutoSpawnPos
+
+                    elseif (getgenv().tokyoGhoulDailyInfinite == false) then
+                        getgenv().world = "Ghoul City"
+                        getgenv().level = "tokyoghoul_infinite"
+                        getgenv().difficulty = "Hard"
+                        getgenv().SpawnUnitPos = getgenv().tokyoGhoulSpawnPos
     
                     else
                         getgenv().world = "Marine's Ford"
@@ -1459,6 +1544,9 @@ coroutine.resume(coroutine.create(function()
         
                     elseif (getgenv().world == "Marine's Ford") then
                         getgenv().SpawnUnitPos = getgenv().marinefordSpawnPos
+                    
+                    elseif (getgenv().world == "Ghoul City") then
+                        getgenv().SpawnUnitPos = getgenv().tokyoGhoulSpawnPos
         
                     end
                     updatejson()
