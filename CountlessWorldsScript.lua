@@ -23,10 +23,6 @@ local mainTab = Window:NewTab("Main")
 local mainSection = mainTab:NewSection("Main Scripts")
     
 -- God Mode
-mainSection:NewTextBox("Enter Username:", "Enter your roblox username", function(txt)
-	getgenv().player = txt
-end)
-
 mainSection:NewButton("God Mode", "Immune To All Damage", function(state)
     for i,v in pairs(game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name):GetChildren()) do
         if v.Name == "Hitbox" then
