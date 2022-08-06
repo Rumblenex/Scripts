@@ -15,6 +15,7 @@ local Window = Library.CreateLib("Countless Worlds GUI, Made by Rumblenex", colo
 local stack = 1
 getgenv().autoDrops = true
 getgenv().autoBattle = true
+getgenv().player = ""
 
 -- Tabs
 local mainTab = Window:NewTab("Main")
@@ -22,8 +23,11 @@ local mainTab = Window:NewTab("Main")
 local mainSection = mainTab:NewSection("Main Scripts")
     
 -- God Mode
+mainSection:NewTextBox("Enter Username:", "Enter your roblox username", function(txt)
+	getgenv().player = txt
+end)
 mainSection:NewButton("God Mode", "Immune To All Damage", function(state)
-    game.Workspace.Auranex.Hitbox:Destroy() 
+    game.Workspace.getgenv().player.Hitbox:Destroy() 
 end)
 
 -- Auto Pick up Drops
