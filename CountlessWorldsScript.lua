@@ -26,8 +26,13 @@ local mainSection = mainTab:NewSection("Main Scripts")
 mainSection:NewTextBox("Enter Username:", "Enter your roblox username", function(txt)
 	getgenv().player = txt
 end)
+
 mainSection:NewButton("God Mode", "Immune To All Damage", function(state)
-    game.Workspace.getgenv().player.Hitbox:Destroy() 
+    for i,v in pairs(game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name):GetChildren()) do
+        if v.Name == "Hitbox" then
+            v:Destroy()
+        end
+    end
 end)
 
 -- Auto Pick up Drops
