@@ -19,9 +19,11 @@ getgenv().player = ""
 
 -- Tabs
 local mainTab = Window:NewTab("Main")
+local miscTab = Window:NewTab("Misc")
 
 local mainSection = mainTab:NewSection("Main Scripts")
-    
+local miscSection = miscTab:NewSection("Misc")
+
 -- God Mode
 mainSection:NewButton("God Mode", "Immune To All Damage", function(state)
     for i,v in pairs(game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name):GetChildren()) do
@@ -45,6 +47,11 @@ mainSection:NewToggle("Auto Battle", "Picks up Battle Orbs", function(state)
     if state then
         Battle()
     end
+end)
+
+-- speed
+miscSection:NewTextBox("Walkspeed", "Sets player walkspeed", function(s)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 end)
 
 --auto pick up function
