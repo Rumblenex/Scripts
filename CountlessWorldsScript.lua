@@ -13,8 +13,8 @@ local Window = Library.CreateLib("Countless Worlds GUI, Made by Rumblenex", colo
 
 -- global variables
 local stack = 1
-getgenv().autoDrops = true
-getgenv().autoBattle = true
+getgenv().autoDrops = false
+getgenv().autoBattle = false
 getgenv().player = ""
 
 -- Tabs
@@ -36,17 +36,11 @@ end)
 -- Auto Pick up Drops
 mainSection:NewToggle("Auto Pickup", "Picks up all drops on kill", function(state)
     getgenv().autoDrops = state
-    if state then
-        PickupDrops()
-    end
 end)
 
 -- auto battle
 mainSection:NewToggle("Auto Battle", "Picks up Battle Orbs", function(state) 
     getgenv().autoBattle = state
-    if state then
-        Battle()
-    end
 end)
 
 -- speed
@@ -55,51 +49,55 @@ miscSection:NewTextBox("Walkspeed", "Sets player walkspeed", function(s)
 end)
 
 --auto pick up function
-function PickupDrops()
-   spawn(function()
-        while getgenv().autoDrops do
-            -- pick up drops
-            if game.workspace.Dropped then
-                for i,v in pairs(game.workspace.Dropped:GetChildren()) do
-                    v.Grab:FireServer()
+coroutine.resume(coroutine.create(function()
+   pcall(function()
+        while task.wait() do
+            if getgenv().autoDrops then
+                -- pick up drops
+                if game.workspace.Dropped then
+                    for i,v in pairs(game.workspace.Dropped:GetChildren()) do
+                        v.Grab:FireServer()
+                    end
                 end
-            end
-            -- pick up exp and money
-            if game.workspace.Globes then
-                for i,v in pairs(game.workspace.Globes:GetChildren()) do
-                    v.Grab:FireServer()
+                -- pick up exp and money
+                if game.workspace.Globes then
+                    for i,v in pairs(game.workspace.Globes:GetChildren()) do
+                        v.Grab:FireServer()
+                    end
                 end
+                wait(0.1)
             end
-            wait(0.1)
         end
-    end) 
-end
+    end)
+end))
 
 
 -- auto pick up battle orb
-function Battle()
-    spawn(function()
-        while getgenv().autoBattle do
+coroutine.resume(coroutine.create(function()
+    pcall(function()
+        while task.wait() do
             wait(0.1)
-            if game.workspace:WaitForChild("OrbFolder") then
-                print(stack)
-                for i,v in pairs(game.workspace.OrbFolder:GetChildren()) do
-                    local args = {
-                        [1] = tostring(v),
-                        [2] = false,
-                        [3] = {
-                            ["NewStack"] = stack,
-                            ["Gui"] = game:GetService("ReplicatedStorage").StyleStuff.Bounce
+            if getgenv().autoBattle then
+                if game.workspace:WaitForChild("OrbFolder") then
+                    print(stack)
+                    for i,v in pairs(game.workspace.OrbFolder:GetChildren()) do
+                        local args = {
+                            [1] = tostring(v),
+                            [2] = false,
+                            [3] = {
+                                ["NewStack"] = stack,
+                                ["Gui"] = game:GetService("ReplicatedStorage").StyleStuff.Bounce
+                            }
                         }
-                    }
-                    game:GetService("ReplicatedStorage").Networking.RemoteEvents.OrbRem:FireServer(unpack(args))
-                    stack = stack + 1
-                    v:Destroy()
+                        game:GetService("ReplicatedStorage").Networking.RemoteEvents.OrbRem:FireServer(unpack(args))
+                        stack = stack + 1
+                        v:Destroy()
+                    end
                 end
             end
         end
-    end) 
-end
+    end)
+end))
 
 
 
