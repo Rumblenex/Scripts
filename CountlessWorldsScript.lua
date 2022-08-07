@@ -54,13 +54,13 @@ coroutine.resume(coroutine.create(function()
         while task.wait() do
             if getgenv().autoDrops then
                 -- pick up drops
-                if game.workspace.Dropped then
+                if game.workspace.Dropped and game.workspace.Dropped:GetChildren() then
                     for i,v in pairs(game.workspace.Dropped:GetChildren()) do
                         v.Grab:FireServer()
                     end
                 end
                 -- pick up exp and money
-                if game.workspace.Globes then
+                if game.workspace.Globes and game.workspace.Globes:GetChildren() then
                     for i,v in pairs(game.workspace.Globes:GetChildren()) do
                         v.Grab:FireServer()
                     end
