@@ -1,4 +1,4 @@
---v1.4.1
+--v2.0
 ---// Loading Section \\---
 task.wait(2)
 repeat  task.wait() until game:IsLoaded()
@@ -116,6 +116,9 @@ local function webhook()
 
             elseif (getgenv().world == "Marine's Ford") then
                 getgenv().marinefordDailyInfinite = true
+            
+            elseif (getgenv().world == "Hollow World") then
+                getgenv().bleachDailyInfinite = true
 
             end
 
@@ -212,6 +215,7 @@ function sex()
     getgenv().narutoDailyInfinite = data.narutoDailyInfinite
     getgenv().marinefordDailyInfinite = data.marinefordDailyInfinite
     getgenv().tokyoGhoulDailyInfinite = data.tokyoGhoulDailyInfinite
+    getgenv().bleachDailyInfinite = data.bleachDailyInfinite
 
     getgenv().namekSpawnPos = data.xnamekSpawnPos
     getgenv().aotSpawnPos = data.xaotSpawnPos
@@ -219,6 +223,7 @@ function sex()
     getgenv().narutoSpawnPos = data.xnarutoSpawnPos
     getgenv().marinefordSpawnPos = data.xmarinefordSpawnPos
     getgenv().tokyoGhoulSpawnPos = data.xtokyoGhoulSpawnPos
+    getgenv().bleachSpawnPos = data.xbleachSpawnPos
 
     getgenv().buyStarRemnant = data.buyStarRemnant
     getgenv().buySummonTicket = data.buySummonTicket
@@ -254,6 +259,7 @@ function sex()
             narutoDailyInfinite = getgenv().narutoDailyInfinite,
             marinefordDailyInfinite = getgenv().marinefordDailyInfinite,
             tokyoGhoulDailyInfinite = getgenv().tokyoGhoulDailyInfinite,
+            bleachDailyInfinite = getgenv().bleachDailyInfinite,
             
             xnamekSpawnPos = getgenv().namekSpawnPos,
             xaotSpawnPos = getgenv().aotSpawnPos,
@@ -261,6 +267,7 @@ function sex()
             xnarutoSpawnPos =  getgenv().narutoSpawnPos,
             xmarinefordSpawnPos =  getgenv().marinefordSpawnPos,
             xtokyoGhoulSpawnPos = getgenv().tokyoGhoulSpawnPos,
+            xbleachSpawnPos = getgenv().bleachSpawnPos,
 
             buyStarRemnant = getgenv().buyStarRemnant,
             buySummonTicket = getgenv().buySummonTicket
@@ -476,7 +483,7 @@ function sex()
 
         
  
-        local worlddrop = autofarmtab:Dropdown("Select World", {"Planet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford", "Ghoul City"}, getgenv().world, function(world)
+        local worlddrop = autofarmtab:Dropdown("Select World", {"Planet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford", "Ghoul City", "Hollow World"}, getgenv().world, function(world)
                 getgenv().world = world
                 updatejson()
                 if world == "Planet Namak" then
@@ -526,6 +533,15 @@ function sex()
                     table.clear(levels)
                     getgenv().levels = {"tokyoghoul_infinite","tokyoghoul_level_1","tokyoghoul_level_2","tokyoghoul_level_3",
                     "tokyoghoul_level_4","tokyoghoul_level_5","tokyoghoul_level_6",}
+                    for i, v in ipairs(levels) do
+                        getgenv().leveldrop:Add(v)
+                    end
+
+                elseif world == "Hollow World" then
+                    getgenv().leveldrop:Clear()
+                    table.clear(levels)
+                    getgenv().levels = {"hueco_infinite","hueco_level_1","hueco_level_2","hueco_level_3",
+                    "hueco_level_4","hueco_level_5","hueco_level_6",}
                     for i, v in ipairs(levels) do
                         getgenv().leveldrop:Add(v)
                     end
@@ -665,6 +681,12 @@ function sex()
                             tokyoGhoulSpawnPos[UnitPos]["y"] = a.Position.Y
                             tokyoGhoulSpawnPos[UnitPos]["z"] = a.Position.Z
                             getgenv().SpawnUnitPos = getgenv().tokyoGhoulSpawnPos
+                        
+                        elseif (getgenv().world == "Hollow World") then
+                            bleachSpawnPos[UnitPos]["x"] = a.Position.X
+                            bleachSpawnPos[UnitPos]["y"] = a.Position.Y
+                            bleachSpawnPos[UnitPos]["z"] = a.Position.Z
+                            getgenv().SpawnUnitPos = getgenv().bleachSpawnPos
 
                         end
 
@@ -756,6 +778,7 @@ function sex()
         autofarmtab:Label("Naruto Infinite: " .. tostring(getgenv().narutoDailyInfinite))
         autofarmtab:Label("Marine Ford Infinite: " .. tostring(getgenv().marinefordDailyInfinite))
         autofarmtab:Label("Tokyo Ghoul: " .. tostring(getgenv().tokyoGhoulDailyInfinite))
+        autofarmtab:Label("Bleach: " .. tostring(getgenv().bleachDailyInfinite))
         autofarmtab:Label(" ")
         autofarmtab:Label(" ")
 
@@ -884,12 +907,17 @@ function sex()
                     getgenv().difficulty = "Hard"
                     getgenv().SpawnUnitPos = getgenv().marinefordSpawnPos
 
-                else 
+                elseif (getgenv().tokyoGhoulDailyInfinite == false) then
                     getgenv().world = "Ghoul City"
                     getgenv().level = "tokyoghoul_infinite"
                     getgenv().difficulty = "Hard"
                     getgenv().SpawnUnitPos = getgenv().tokyoGhoulSpawnPos
-
+                
+                else 
+                    getgenv().world = "Hollow World"
+                    getgenv().level = "hollowWorld_infinite"
+                    getgenv().difficulty = "Hard"
+                    getgenv().SpawnUnitPos = getgenv().bleachSpawnPos
                 end
             end
 
@@ -906,6 +934,7 @@ function sex()
             getgenv().narutoDailyInfinite = false
             getgenv().marinefordDailyInfinite = false
             getgenv().tokyoGhoulDailyInfinite = false
+            getgenv().bleachDailyInfinite = false
 
             updatejson()
         end)
@@ -971,6 +1000,7 @@ function sex()
         customFeatures:Label("Naruto Infinite: " .. tostring(getgenv().narutoDailyInfinite))
         customFeatures:Label("Marine Ford Infinite: " .. tostring(getgenv().marinefordDailyInfinite))
         customFeatures:Label("Tokyo Ghoul: " .. tostring(getgenv().tokyoGhoulDailyInfinite))
+        customFeatures:Label("Bleach: " .. tostring(getgenv().bleachDailyInfinite))
         customFeatures:Label(" ")
         customFeatures:Label(" ")
 
@@ -1007,6 +1037,7 @@ else
         demonslayerDailyInfinite = false,
         marinefordDailyInfinite = false,
         tokyoGhoulDailyInfinite = false,
+        bleachDailyInfinite = false,
         webhook = "",
         sellatwave = 0,
         autosell = false,
@@ -1282,6 +1313,44 @@ else
                 z = -707.9673461914062
             }
         },
+
+        xbleachSpawnPos = {
+            UP1 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            },
+
+            UP2 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            },
+
+            UP3 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            },
+
+            UP4 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            },
+            
+            UP5 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            },
+
+            UP6 = {
+                x = -2952.81689453125,
+                y = 91.80620574951172,
+                z = -707.9673461914062
+            }
+        },
         
         xselectedUnits = {
             U1 = nil,
@@ -1521,13 +1590,17 @@ coroutine.resume(coroutine.create(function()
                         getgenv().difficulty = "Hard"
                         getgenv().SpawnUnitPos = getgenv().marinefordSpawnPos
                     
-                    else
+                    elseif (getgenv().bleachDailyInfinite == false) then
                         getgenv().world = "Ghoul City"
                         getgenv().level = "tokyoghoul_infinite"
                         getgenv().difficulty = "Hard"
                         getgenv().SpawnUnitPos = getgenv().tokyoGhoulSpawnPos
 
-    
+                    else 
+                        getgenv().world = "Hollow World"
+                        getgenv().level = "hollowworld_infinite"
+                        getgenv().difficulty = "Hard"
+                        getgenv().SpawnUnitPos = getgenv().bleachSpawnPos
                     end
                     updatejson()
                 end
@@ -1549,7 +1622,9 @@ coroutine.resume(coroutine.create(function()
                     
                     elseif (getgenv().world == "Ghoul City") then
                         getgenv().SpawnUnitPos = getgenv().tokyoGhoulSpawnPos
-        
+                    
+                    elseif (getgenv().world == "Hollow World") then
+                        getgenv().SpawnUnitPos = getgenv().bleachSpawnPos
                     end
                     updatejson()
 
